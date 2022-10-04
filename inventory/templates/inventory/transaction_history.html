@@ -1,0 +1,71 @@
+{% extends "inventory/base.html" %} 
+{% block content %}
+<style>
+
+  
+  .has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+</style>
+<div class="container-fluid table-responsive">
+  
+  <div class="container mt-4">
+    <!--item-->
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Filter
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+
+              <div class="card mb-4">
+                <h6 class="card-header">Status</h6>
+              <div class="row">{% include './pages/tran_filter.html' %}</div>
+              </div>
+        </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group has-search mt-3">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control" id="RefSearchBox" placeholder="Search by Reference">
+      </div>
+      
+</div>
+<table class="table caption-top mt-3">
+    <caption class="text-center h4">Transcation History</caption>
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Status</th>
+        <th scope="col">Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Reference</th>
+        <th scope="col">Channel</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Created</th>
+        <th scope="col">Paid On</th>
+      </tr>
+    </thead>
+    <tbody id="filteredProducts">
+        {% include './pages/transactions.html' %}
+
+    </tbody>
+  </table>
+</div>
+{% endblock %}

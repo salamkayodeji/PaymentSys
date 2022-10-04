@@ -1,0 +1,22 @@
+{% load static %}
+<div>
+  
+  
+      {% for status in status %}
+      <li class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="btn-check" 
+          data-filter="status"          
+          value="{{status}}"
+          id="{{status}}-option1"
+        />
+        
+        <label class="btn btn-secondary" for="{{status}}-option1">{{status}}</label>
+      </li>
+      {% endfor %}
+
+
+  </div>
+
+  

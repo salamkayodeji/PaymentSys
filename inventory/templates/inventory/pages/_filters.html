@@ -1,0 +1,18 @@
+<form>
+  {% csrf_token %}
+
+    {% for type in story_types %}
+    <li class="form-check form-check-inline">
+      <input
+        type="radio"
+        name="filter4"
+        id="filter4-{{type}}"
+        class="btn-check"
+        value="{{type}}"
+      />
+      <label for="filter4-{{type}}" class="btn btn-outline-primary">
+        {{type|capfirst}}
+      </label>
+    </li>
+    {% endfor %}
+</form>

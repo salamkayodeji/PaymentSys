@@ -1,0 +1,33 @@
+{% extends "inventory/base.html" %} 
+{% block content %}
+{% if messages %} {% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %} {% endif %}
+
+
+<div class="container mt-3">
+    
+    <a type="button" class="btn btn-outline-success mb-3" href="{% url 'product-create' %}">Add Product</a>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">Price: {{product.price}}</p>
+            <a type="button" class="btn btn-outline-info ml-2" href="{% url 'product-update' product.id %}">Edit Item</a>
+            <a type="button" class="btn btn-outline-danger ml-2" href="{% url 'product-delete' product.id %}">Delete Item</a>
+        </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

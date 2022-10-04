@@ -1,0 +1,86 @@
+{% load static %}
+<style>
+    input{
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    width: 100%;
+    min-width: unset;
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0;
+}
+
+form input:hover{
+    color:grey;
+    text-decoration: none;
+}
+
+
+.card{
+    margin: auto;
+    width: 600px;
+    padding: 3rem 3.5rem;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.row{
+    margin: 0;
+    overflow: hidden;
+}
+.row-1{
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 0.5rem;
+    outline: none;
+    width: 100%;
+    min-width: unset;
+    border-radius: 5px;
+    background-color: rgba(221, 228, 236, 0.301);
+    border-color: rgba(221, 228, 236, 0.459);
+    margin: 2vh 0;
+    overflow: hidden;
+}
+
+.row .col-2,.col-7,.col-3{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0 1vh;
+}
+.row .col-2{
+    padding-right: 0;
+}
+
+
+
+</style>
+
+<div class="container mt-3">
+    <form>
+        {% csrf_token %}
+
+    <span id="card-header text-center">Saved cards:</span>
+    {% for card in cards %}
+<div class="row row-1">
+    
+        <div class="col-2"><img class="img-fluid" src="https://img.icons8.com/color/48/000000/visa.png"/>
+        </div>
+        <div class="col-7 lead">
+            <input type="text" placeholder="{{card.bin_no}} ** **** {{card.last_4}}">    
+            {{ card.exp_month }}/{{ card.exp_year }}
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <input class="form-check-input" id="{{card.authorization_code}}-option1" data-filter = "card" type="radio" value="{{card.authorization_code}}" id="{{card.authorization_code}}">
+            <label class="form-check-label" for="{{card.authorization_code}}">
+              Pay with card
+            </label>
+        </div>
+
+
+</div>
+    {% endfor %}
+</form>
+</div>
+  

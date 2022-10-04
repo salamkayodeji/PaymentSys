@@ -1,0 +1,80 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+     <div class="row">
+		<div class="col-lg-6">
+			<div class="box-element" id="form-wrapper">
+
+					<div id="user-info">
+						<div class="form-field">
+							<input required class="form-control" type="text" id = "first_name" name="first_name" placeholder="First Name">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" id = "last_name" name="last_name" placeholder="Last Name">
+						</div>
+					</div>
+					<hr>
+
+					<button type="submit" class="btn btn-outline-success" onclick="payWithPaystack()">Success</button>
+
+				<script src="https://js.paystack.co/v1/inline.js"></script> 
+
+
+			</div>
+			{% include './pages/saved_card.html' %}
+
+		</div>
+
+		<div class="col-lg-6">
+			<div class="box-element">
+				<a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				<hr>
+				<h3>Order Summary</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><p>{{item.product.name}}</p></div>
+					<div style="flex:1"><p>N{{item.product.price|floatformat:2|intcomma}}</p></div>
+					<div style="flex:1"><p>x{{item.quantity}}</p></div>
+				</div>
+				{% endfor %}
+				<h5>Items:   {{order.get_cart_items}}</h5>
+				<h5>Total: N{{order.get_cart_total|floatformat:2|intcomma}}</h5>
+				<input id="total_value" value="{{order.get_cart_total}}" placeholder="{{order.get_cart_total}}" type="hidden">
+				<input id="transaction_id" value="{{order.transaction_id}}" placeholder="{{order.transaction_id}}" type="hidden">
+			</div>
+		</div>
+	</div>
+<script>
+	function payWithPaystack(){
+		let currency = "NGN"
+		let transaction_id = "{{order.transaction_id}}"
+		let user_email = "{{request.user.email}}"
+		let user_firstname = document.getElementById("first_name").value
+		let user_lastname = document.getElementById("last_name").value
+		let user_amount = "{{order.get_cart_total}}"
+		console.log(user_amount * 100)
+		
+		var handler = PaystackPop.setup({
+			key: "{{paystack_public_key}}",
+			email: user_email,
+			amount: user_amount * 100,
+			ref: transaction_id,
+			callback: function(response){
+				window.location.href= "{% url 'verify-payment' order.transaction_id %}";
+			},
+			onClose: function() {
+      		alert('Transaction was not completed, window closed.')
+
+   		 },
+
+		});
+	handler.openIframe();
+}
+</script>
+
+{% endblock %}
+
+
+ 

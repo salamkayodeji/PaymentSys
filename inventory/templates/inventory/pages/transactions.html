@@ -1,0 +1,24 @@
+{% load static %}
+{% load humanize %}
+
+{% for object in transactions %}
+<tr>
+  {% if object.status == True and object.status_message == "Successful" or object.status_message ==  "Approved"  %}
+    <th scope="row"><img src="{% static 'img/led-circle-green.svg'%}" alt></th>
+  {% elif object.status == False  %}
+  <th scope="row"><img src="{% static 'img/1306313012.svg'%}" alt></th>
+  {% else %}
+  <th scope="row"><img src="{% static 'img/led-circle-black.svg'%}" alt></th>
+
+  {% endif %}
+    <td>{{ object.email }}</td>
+    <td>N{{ object.amount|intcomma }}</td>
+    <td>{{object.transaction_id}}</td>
+    <td>{{object.channel}}</td>
+    <td>{{object.status_message}}</td>
+    <td>{{object.date_ordered}}</td>
+    <td>{{object.paid_on}}</td>
+
+  </tr>
+
+{% endfor %}
